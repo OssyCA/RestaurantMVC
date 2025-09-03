@@ -1,0 +1,40 @@
+﻿@model List<MenuItem>
+
+<div class="container text-center">
+    <h1>Välkommen till Restaurang Syb</h1>
+    <div class="align-items-center fs-3">
+        På Restaurang SYB möts klassisk matkultur och moderna smaker i en varm och inbjudande miljö. Vår vision är enkel: att skapa en plats där gäster kan samlas, njuta av god mat och känna sig som hemma.
+
+        Vi erbjuder en varierad meny med rätter tillagade av noggrant utvalda råvaror – alltid med fokus på kvalitet, hållbarhet och smak. Oavsett om du kommer för en snabb lunch, en mysig middag eller en festlig kväll med vänner, vill vi ge dig en upplevelse som stannar kvar längre än måltiden.
+
+        Hos oss är det inte bara maten som står i centrum, utan även gemenskapen. Välkommen in och låt oss ta hand om resten!
+    </div>
+
+    <div>
+        <h2>Populära rätter</h2>
+        @if (!Model.Any())
+        {
+            <div>
+                <p>No popular Menu items were found!</p>
+            </div>
+        }
+        else
+        {
+            <ul>
+                @foreach (var item in Model)
+                {
+                    @if (item.IsPopular == true)
+                    {
+                        <li>
+                            <h4>@item.Title</h4>
+                            <img src="@item.ImageUrl" class="img-fluid w-50" />
+                        </li>
+                    }
+                    
+                }
+            </ul>
+        }
+
+    </div>
+
+</div>
