@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantMVC.Models;
+using RestaurantMVC.Services.IGetMenuService;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace RestaurantMVC.Controllers
 {
-    public class HomeController(IHttpClientFactory httpClientFactory) : Controller
+    public class HomeController(IGetMenu menu) : Controller
     {
-        private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
         public async Task<IActionResult> Index()
         {
-            var response = await _httpClient.GetAsync("Menu/GetWholeMenu");
+            var items = await menu.Menu();
 
 
-            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<MenuItem>>>();
-            var menu = apiResponse?.Data;
-            return View(menu);
+
+            return View(items.Where(i => i.IsPopular == true).ToList());
         }
     }
 }

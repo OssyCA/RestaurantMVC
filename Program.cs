@@ -1,3 +1,6 @@
+using RestaurantMVC.Services;
+using RestaurantMVC.Services.IGetMenuService;
+
 namespace RestaurantMVC
 {
     public class Program
@@ -13,6 +16,7 @@ namespace RestaurantMVC
             {
                 client.BaseAddress = new Uri("https://localhost:7099/api/");
             });
+            builder.Services.AddScoped<IGetMenu, GetMenu>();
 
             var app = builder.Build();
 
