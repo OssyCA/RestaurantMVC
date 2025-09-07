@@ -23,18 +23,17 @@ namespace RestaurantMVC.Services
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogWarning($"API not available {ex.Message}");
+                _logger.LogWarning(ex, "API not available: {Message}", ex.Message);
                 return GetFallbackMenu();
             }
 
             catch (Exception ex)
             {
-                _logger.LogError($"Error {ex.Message}");
+                _logger.LogError(ex, "Error occurred: {Message}", ex.Message);
                 return GetFallbackMenu();
             }
 
         }
-
         private static List<MenuItem> GetFallbackMenu()
         {
             return [
