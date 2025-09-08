@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using RestaurantMVC.Services;
 using RestaurantMVC.Services.IGetMenuService;
+using System.Net;
 
 namespace RestaurantMVC
 {
@@ -15,7 +17,19 @@ namespace RestaurantMVC
             builder.Services.AddHttpClient("RestaurantAPI", client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7099/api/");
+            }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+            {
+                CookieContainer = new CookieContainer(),
+                UseCookies = true
             });
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o =>
+                {
+                    o.LoginPath = "/Employee/Login";
+                });
+            builder.Services.AddAuthorization();
+
             builder.Services.AddScoped<IGetMenu, GetMenu>();
 
             var app = builder.Build();
@@ -29,6 +43,7 @@ namespace RestaurantMVC
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseStaticFiles();
 
             app.UseRouting();
