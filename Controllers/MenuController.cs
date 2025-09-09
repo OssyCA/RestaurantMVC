@@ -13,19 +13,25 @@ namespace RestaurantMVC.Controllers
         private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
         public async Task<IActionResult> Index(int? selectedId = null)
         {
+            ViewBag.ShowDescriptionBtn = true;
             var menuItems = await menu.Menu();
 
             ViewBag.SelectedId = selectedId; // fixa viewModel ist
 
             return View(menuItems);
         }
-        public IActionResult ManageMenuItems()
+        public async Task<IActionResult> ManageMenuItems()
         {
-            return View();
+            var menuItems = await menu.Menu(); // Make sure this is async
+            ViewBag.ShowEditButtons = true;
+            ViewBag.ShowDeleteButtons = true;
+            ViewBag.ShowDescriptionBtn = false;
+            return View("Index", menuItems); // This should pass List<MenuItem>
         }
         public IActionResult CreateMenuItem()
         {
-            return View("ManageMenuItems");
+            var model = new MenuItemVM();
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> CreateMenuItemAsync(MenuItemVM model)
@@ -68,10 +74,7 @@ namespace RestaurantMVC.Controllers
         public async Task<IActionResult> DeleteItem(int id)
         {
 
-            Console.WriteLine($"POST hit: DeleteItem id={id}");
-
             var response = await _httpClient.DeleteAsync($"Menu/DeleteItem/{id}");
-            Console.WriteLine($"API responded: {(int)response.StatusCode} {response.StatusCode}");
 
             if (!response.IsSuccessStatusCode)
                 return RedirectToAction("ManageMenuItems");
