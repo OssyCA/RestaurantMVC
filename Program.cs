@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using RestaurantMVC.Helper;
+
 using RestaurantMVC.Services;
 using RestaurantMVC.Services.Iservices;
 using System.Net;
@@ -14,22 +16,28 @@ namespace RestaurantMVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddTransient<JwtTokenHandler>();
+
             builder.Services.AddHttpClient("RestaurantAPI", client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7099/api/");
-            }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
             {
                 CookieContainer = new CookieContainer(),
                 UseCookies = true
-            });
+            })
+            .AddHttpMessageHandler<JwtTokenHandler>(); 
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o =>
                 {
                     o.LoginPath = "/Employee/Login";
                 });
-            builder.Services.AddAuthorization();
 
+            builder.Services.AddAuthorization();
             builder.Services.AddScoped<IGetMenu, GetMenu>();
 
             var app = builder.Build();
@@ -38,16 +46,13 @@ namespace RestaurantMVC
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapControllerRoute(

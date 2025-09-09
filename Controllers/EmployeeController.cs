@@ -45,7 +45,7 @@ namespace RestaurantMVC.Controllers
                     IsPersistent = true,
                     ExpiresUtc = jwtObject.ValidTo
                 });
-          
+
 
             if (apiResponse?.Data != null)
             {
