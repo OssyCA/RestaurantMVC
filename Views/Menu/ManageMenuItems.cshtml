@@ -1,49 +1,48 @@
 ﻿@model RestaurantMVC.ViewModels.ManageMenuVM
 
-<div class="container-fluid px-4">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-10">
-            <h2 class="text-center mb-4 text-light fw-bold">
-                <i class="fas fa-utensils me-2"></i>Hantera Meny
-            </h2>
-
-            <div class="card bg-dark border-secondary mb-4 shadow-lg">
-                <div class="card-header bg-gradient text-light border-secondary">
-                    <h4 class="mb-0">
-                        <i class="fas fa-plus-circle me-2 text-success"></i>Skapa nytt Meny innehåll
-                    </h4>
-                </div>
-                <div class="card-body bg-dark">
-                    <partial name="_MenuItemForm" model="Model.NewMenuItem"
-                             view-data='@(new ViewDataDictionary(ViewData) { ["FormAction"] = "CreateMenuItem" })' />
-                </div>
-            </div>
-
-            @if (ViewBag.ValidationErrors != null)
-            {
-                <div class="alert alert-danger border-0 shadow-sm">
-                    <h5 class="alert-heading">
-                        <i class="fas fa-exclamation-triangle me-2"></i>Valideringsfel:
-                    </h5>
-                    <ul class="mb-0">
-                        @foreach (var error in ViewBag.ValidationErrors)
-                        {
-                            <li><strong>@error.Field:</strong> @string.Join(", ", error.Errors)</li>
-                        }
-                    </ul>
-                </div>
-            }
-
-            <div class="card bg-dark border-secondary shadow-lg">
-                <div class="card-header bg-gradient text-light border-secondary">
-                    <h4 class="mb-0">
-                        <i class="fas fa-list me-2 text-info"></i>Befintliga Meny Items
-                    </h4>
-                </div>
-                <div class="card-body bg-dark p-4">
-                    <partial name="_FullMenu" model="Model.MenuItems" />
-                </div>
-            </div>
-        </div>
+<div class="card bg-dark border-secondary mb-4 shadow-lg">
+    <div class="card-header bg-gradient text-light border-secondary">
+        <h4 class="mb-0">
+            <i class="fas fa-plus-circle me-2 text-success"></i>Skapa nytt Meny innehåll
+        </h4>
     </div>
+    <div class="card-body bg-dark">
+        <partial name="_MenuItemForm" model="Model.NewMenuItem" />
+    </div>
+</div>
+
+@if (ViewBag.ValidationErrors != null)
+{
+    <div class="alert alert-danger border-0 shadow-sm">
+        <h5 class="alert-heading">
+            <i class="fas fa-exclamation-triangle me-2"></i>Valideringsfel:
+        </h5>
+        <ul class="mb-0">
+            @foreach (var error in ViewBag.ValidationErrors)
+            {
+                <li><strong>@error.Field:</strong> @string.Join(", ", error.Errors)</li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="container text-center">
+    @foreach (var item in Model.MenuItems)
+    {
+        <div class="mb-4">
+            <h4>@item.Title</h4>
+            <img src="@item.ImageUrl" class="img-fluid w-25" alt="@item.Title" style="width: 2.5em; height: 15em; object-fit: cover; border-radius: 8px;" />
+            <p>PRICE: @item.Price</p>
+            <a class="btn btn-warning mb-2" asp-action="Edit" asp-route-id="@item.Id">
+                <i class="fas fa-edit"></i> Redigera
+            </a>
+            <form asp-action="DeleteItem" asp-controller="Menu" asp-route-id="@item.Id" method="post"
+                  onsubmit="return confirm('Är du säker på att du vill ta bort @item.Title?')"
+                  class="d-inline w-100">
+                <button type="submit" class="btn btn-danger mb-2 w-100">
+                    <i class="fas fa-trash"></i> Ta bort
+                </button>
+            </form>
+        </div>
+    }
 </div>
