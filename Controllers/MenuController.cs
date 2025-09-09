@@ -87,7 +87,7 @@ namespace RestaurantMVC.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("ManageMenuItems");
             }
 
             var dto = new UpdateMenuItemDTO
