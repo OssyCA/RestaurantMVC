@@ -22,11 +22,18 @@ namespace RestaurantMVC.Controllers
         }
         public async Task<IActionResult> ManageMenuItems()
         {
-            var menuItems = await menu.Menu(); // Make sure this is async
+            var menuItems = await menu.Menu();
+            var viewModel = new ManageMenuVM
+            {
+                MenuItems = menuItems,
+                NewMenuItem = new MenuItemVM()
+            };
+
             ViewBag.ShowEditButtons = true;
             ViewBag.ShowDeleteButtons = true;
             ViewBag.ShowDescriptionBtn = false;
-            return View("Index", menuItems); // This should pass List<MenuItem>
+
+            return View("ManageMenuItems", viewModel); 
         }
         public IActionResult CreateMenuItem()
         {
@@ -34,17 +41,30 @@ namespace RestaurantMVC.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateMenuItemAsync(MenuItemVM model)
+        [HttpPost]
+        public async Task<IActionResult> CreateMenuItem(MenuItemVM model)
         {
-            if (!ModelState.IsValid)  
+            if (!ModelState.IsValid)
             {
+                // Vid fel: Skapa ManageMenuVM med felaktiga data
+                var menuItems = await menu.Menu();
+                var manageModel = new ManageMenuVM
+                {
+                    MenuItems = menuItems,
+                    NewMenuItem = model // Behåll användarens input
+                };
+
                 var errors = ModelState
                     .Where(x => x.Value.Errors.Count > 0)
                     .Select(x => new { Field = x.Key, Errors = x.Value.Errors.Select(e => e.ErrorMessage) })
                     .ToList();
 
                 ViewBag.ValidationErrors = errors;
-                return View("ManageMenuItems", model);  
+                ViewBag.ShowEditButtons = true;
+                ViewBag.ShowDeleteButtons = true;
+                ViewBag.ShowDescriptionBtn = false;
+
+                return View("ManageMenuItems", manageModel);
             }
 
             var dto = new CreateMenuItemDTO
@@ -57,7 +77,20 @@ namespace RestaurantMVC.Controllers
             };
 
             await _httpClient.PostAsJsonAsync("Menu/CreateMenuItem", dto);
-            return View("ManageMenuItems");  
+
+            // Vid framgång: Skapa ny ManageMenuVM med uppdaterad meny
+            var updatedMenuItems = await menu.Menu();
+            var successModel = new ManageMenuVM
+            {
+                MenuItems = updatedMenuItems,
+                NewMenuItem = new MenuItemVM() // Tomt formulär
+            };
+
+            ViewBag.ShowEditButtons = true;
+            ViewBag.ShowDeleteButtons = true;
+            ViewBag.ShowDescriptionBtn = false;
+
+            return View("ManageMenuItems", successModel);
         }
         public async Task<IActionResult> Update(int id)
         {
@@ -73,14 +106,12 @@ namespace RestaurantMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteItem(int id)
         {
-
             var response = await _httpClient.DeleteAsync($"Menu/DeleteItem/{id}");
 
             if (!response.IsSuccessStatusCode)
                 return RedirectToAction("ManageMenuItems");
 
-            return RedirectToAction("Index");
-
+            return RedirectToAction("ManageMenuItems"); 
         }
 
     }
