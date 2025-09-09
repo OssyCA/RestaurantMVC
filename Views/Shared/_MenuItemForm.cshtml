@@ -1,5 +1,9 @@
 ﻿@model RestaurantMVC.ViewModels.MenuItemVM
-<form asp-action="@ViewData["FormAction"]" method="post">
+<form asp-action="@ViewData["FormAction"]" asp-route-id="@Model.Id" method="post" asp-controller="Menu">
+    @if (Model.Id > 0)
+    {
+        <input asp-for="Id" type="hidden" />
+    }
     <div>
         <label asp-for="Title"></label>
         <input asp-for="Title" />

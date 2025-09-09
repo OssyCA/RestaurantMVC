@@ -1,4 +1,5 @@
-﻿using RestaurantMVC.Models;
+﻿using RestaurantMVC.DTOs;
+using RestaurantMVC.Models;
 
 namespace RestaurantMVC.ViewModels
 {

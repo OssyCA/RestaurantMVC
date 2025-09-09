@@ -1,4 +1,5 @@
-﻿@model RestaurantMVC.ViewModels.ManageMenuVM
+﻿@using RestaurantMVC.ViewModels
+@model RestaurantMVC.ViewModels.ManageMenuVM
 
 <div class="card bg-dark border-secondary mb-4 shadow-lg">
     <div class="card-header bg-gradient text-light border-secondary">
@@ -14,21 +15,6 @@
     </div>
 </div>
 
-@if (ViewBag.ValidationErrors != null)
-{
-    <div class="alert alert-danger border-0 shadow-sm">
-        <h5 class="alert-heading">
-            <i class="fas fa-exclamation-triangle me-2"></i>Valideringsfel:
-        </h5>
-        <ul class="mb-0">
-            @foreach (var error in ViewBag.ValidationErrors)
-            {
-                <li><strong>@error.Field:</strong> @string.Join(", ", error.Errors)</li>
-            }
-        </ul>
-    </div>
-}
-
 <div class="container text-center">
     @foreach (var item in Model.MenuItems)
     {
@@ -36,9 +22,30 @@
             <h4>@item.Title</h4>
             <img src="@item.ImageUrl" class="img-fluid w-25" alt="@item.Title" style="width: 2.5em; height: 15em; object-fit: cover; border-radius: 8px;" />
             <p>PRICE: @item.Price</p>
-            <a class="btn btn-warning mb-2" asp-action="Edit" asp-route-id="@item.Id">
-                <i class="fas fa-edit"></i> Redigera
-            </a>
+
+            <div class="card bg-dark border-secondary mb-4 shadow-lg">
+                <div class="card-header bg-gradient text-light border-secondary">
+                    <h4 class="mb-0">
+                        <i class="fas fa-edit me-2 text-warning"></i>Redigera Menyobjekt: @item.Title
+                    </h4>
+                </div>
+                <div class="card-body bg-dark">
+                    @{
+                        ViewData["FormAction"] = "Edit";
+                        var editModel = new MenuItemVM
+                        {
+                            Id = item.Id,
+                            Title = item.Title,
+                            Description = item.Description,
+                            IsPopular = item.IsPopular,
+                            ImageUrl = item.ImageUrl,
+                            Price = item.Price
+                        };
+                    }
+                    <partial name="_MenuItemForm" model="editModel" />
+                </div>
+            </div>
+
             <form asp-action="DeleteItem" asp-controller="Menu" asp-route-id="@item.Id" method="post"
                   onsubmit="return confirm('Är du säker på att du vill ta bort @item.Title?')"
                   class="d-inline w-100">

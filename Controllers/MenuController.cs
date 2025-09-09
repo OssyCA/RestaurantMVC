@@ -78,10 +78,13 @@ namespace RestaurantMVC.Controllers
             }
         }
 
+
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, MenuItemVM model)
+        public async Task<IActionResult> Edit(int id, MenuItemVM model, bool showForm)
         {
+            ViewBag.SelectedId = id;
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -101,11 +104,12 @@ namespace RestaurantMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["SuccessMessage"] = "Menyobjektet har uppdaterats!";
                 return RedirectToAction("ManageMenuItems");
             }
 
-            ModelState.AddModelError("", "Ett fel uppstod när meny-objektet skulle uppdateras.");
-            return View(model);
+            TempData["ErrorMessage"] = "Ett fel uppstod när meny-objektet skulle uppdateras.";
+            return RedirectToAction("ManageMenuItems");
         }
         [Authorize]
         [HttpPost]
