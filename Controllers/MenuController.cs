@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantMVC.DTOs;
 using RestaurantMVC.Models;
-using RestaurantMVC.Services.IGetMenuService;
+using RestaurantMVC.Services.Iservices;
+using RestaurantMVC.ViewModels;
 using System.Net.Http;
 
 namespace RestaurantMVC.Controllers
 {
-    public class MenuController(IGetMenu menu) : Controller
+    public class MenuController(IGetMenu menu, IHttpClientFactory httpClientFactory) : Controller
     {
+        private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
         public async Task<IActionResult> Index(int? selectedId = null)
         {
             var menuItems = await menu.Menu();
@@ -15,6 +18,66 @@ namespace RestaurantMVC.Controllers
             ViewBag.SelectedId = selectedId; // fixa viewModel ist
 
             return View(menuItems);
+        }
+        public IActionResult ManageMenuItems()
+        {
+            return View();
+        }
+        public IActionResult CreateMenuItem()
+        {
+            return View("ManageMenuItems");
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateMenuItemAsync(MenuItemVM model)
+        {
+            if (!ModelState.IsValid)  
+            {
+                var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new { Field = x.Key, Errors = x.Value.Errors.Select(e => e.ErrorMessage) })
+                    .ToList();
+
+                ViewBag.ValidationErrors = errors;
+                return View("ManageMenuItems", model);  
+            }
+
+            var dto = new CreateMenuItemDTO
+            {
+                Title = model.Title,
+                Description = model.Description,
+                IsPopular = model.IsPopular,
+                ImageUrl = model.ImageUrl,
+                Price = model.Price
+            };
+
+            await _httpClient.PostAsJsonAsync("Menu/CreateMenuItem", dto);
+            return View("ManageMenuItems");  
+        }
+        public async Task<IActionResult> Update(int id)
+        {
+           
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Update(MenuItemVM model)
+        {
+
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+
+            Console.WriteLine($"POST hit: DeleteItem id={id}");
+
+            var response = await _httpClient.DeleteAsync($"Menu/DeleteItem/{id}");
+            Console.WriteLine($"API responded: {(int)response.StatusCode} {response.StatusCode}");
+
+            if (!response.IsSuccessStatusCode)
+                return RedirectToAction("ManageMenuItems");
+
+            return RedirectToAction("Index");
+
         }
 
     }

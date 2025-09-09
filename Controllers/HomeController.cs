@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantMVC.Models;
-using RestaurantMVC.Services.IGetMenuService;
+using RestaurantMVC.Services.Iservices;
 using System.Net.Http;
 using System.Threading.Tasks;
 

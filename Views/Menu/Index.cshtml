@@ -1,18 +1,7 @@
 ﻿@model List<MenuItem>
-<div class="container text-center">
-    <h2>Syb Menu</h2>
-    @foreach (var item in Model)
-    {
-        <div class="mb-4">
-            <h4>@item.Title</h4>
-            <img src="@item.ImageUrl" class="img-fluid w-25" alt="@item.Title" style="width: 2.5em; height: 15em; object-fit: cover; border-radius: 8px;" />
-            <p>PRICE: @item.Price</p>
 
-            <a class="btn btn-outline-primary shadow-none" asp-action="Index" asp-route-selectedId="@item.Id"> Show </a>
-            @if (ViewBag.SelectedId == item.Id)
-            {
-                <p>@item.Description</p>
-            }
-        </div>
-    }
-</div>
+@{
+    ViewData["Title"] = "Menu Index";
+}
+
+<partial name="_FullMenu" model="Model" />

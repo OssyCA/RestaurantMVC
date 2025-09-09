@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using RestaurantMVC.Models;
-using RestaurantMVC.Services.IGetMenuService;
+using RestaurantMVC.Services.Iservices;
 
 namespace RestaurantMVC.Services
 {

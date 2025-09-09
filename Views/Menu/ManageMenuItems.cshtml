@@ -1,0 +1,39 @@
+﻿@model RestaurantMVC.ViewModels.MenuItemVM
+<div>
+    <div>
+        <h2>Skapa nytt Meny innehåll</h2>
+        <partial name="_MenuItemForm" model="Model"
+                 view-data='new ViewDataDictionary(ViewData) {
+                                               { "FormAction", "CreateMenuItem" },
+                                               { "SubmitText", "Skapa" }
+                }' />
+
+
+
+    </div>
+    <partial name="_FullMenu" model="Model" />
+    <div>
+        <h2>Radera Meny innehåll</h2>
+        <div>
+            <form asp-controller="Menu" asp-action="DeleteItem" method="post" onsubmit="return confirm('Är du säker på att du vill ta bort detta?')">
+                <div>
+                    <label for="id">ID att radera:</label>
+                    <input type="number" name="id" id="id" required />
+                </div>
+                <button type="submit" class="btn btn-danger">Ta bort</button>
+            </form>
+        </div>
+    </div>
+    @if (ViewBag.ValidationErrors != null)
+    {
+        <div class="alert alert-danger">
+            <h4>Valideringsfel:</h4>
+            <ul>
+                @foreach (var error in ViewBag.ValidationErrors)
+                {
+                    <li><strong>@error.Field:</strong> @string.Join(", ", error.Errors)</li>
+                }
+            </ul>
+        </div>
+    }
+</div>

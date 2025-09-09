@@ -1,4 +1,10 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const checkbox = document.getElementById("updateTable");
+const idField = document.getElementById("idField");
 
-// Write your JavaScript code.
+checkbox.addEventListener("change", function () {
+    if (this.checked) {
+        idField.style.display = "block"; // visa rutan
+    } else {
+        idField.style.display = "none"; // dölj rutan
+    }
+});

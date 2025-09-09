@@ -20,7 +20,7 @@ namespace RestaurantMVC.Controllers
         }
         public IActionResult HandleMenu()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ManageMenuItems", "Menu");
         }
     }
 }

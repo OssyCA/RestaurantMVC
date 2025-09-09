@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using RestaurantMVC.Services;
-using RestaurantMVC.Services.IGetMenuService;
+using RestaurantMVC.Services.Iservices;
 using System.Net;
 
 namespace RestaurantMVC

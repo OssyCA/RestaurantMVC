@@ -1,6 +1,6 @@
 ﻿using RestaurantMVC.Models;
 
-namespace RestaurantMVC.Services.IGetMenuService
+namespace RestaurantMVC.Services.Iservices
 {
     public interface IGetMenu
     {

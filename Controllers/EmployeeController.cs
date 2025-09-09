@@ -26,7 +26,7 @@ namespace RestaurantMVC.Controllers
             if (!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError("", "Invalid login attempt");  // FIXA BÄTTRE
-                return View(loginEmployee);
+                return View(loginEmployee); // FIxa error sida
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<TokenResponse>>();
             var jwt = apiResponse.Data.AccessToken;
