@@ -30,6 +30,7 @@ namespace RestaurantMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateMenuItem(MenuItemVM model)
         {
             if (!ModelState.IsValid)
@@ -112,7 +113,7 @@ namespace RestaurantMVC.Controllers
             ModelState.AddModelError("", "Ett fel uppstod när meny-objektet skulle uppdateras.");
             return View(model);
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> DeleteItem(int id)
         {
