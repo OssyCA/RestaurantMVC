@@ -7,6 +7,9 @@
         </h4>
     </div>
     <div class="card-body bg-dark">
+        @{
+            ViewData["FormAction"] = "CreateMenuItem";
+        }
         <partial name="_MenuItemForm" model="Model.NewMenuItem" />
     </div>
 </div>

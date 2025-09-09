@@ -8,14 +8,12 @@
             <img src="@item.ImageUrl" class="img-fluid w-25" alt="@item.Title" style="width: 2.5em; height: 15em; object-fit: cover; border-radius: 8px;" />
             <p>PRICE: @item.Price</p>
 
-            @if (ViewBag.ShowDescriptionBtn == true)
+            <a class="btn btn-outline-primary shadow-none" asp-action="Index" asp-route-selectedId="@item.Id"> Show </a>
+            @if (ViewBag.SelectedId == item.Id)
             {
-                <a class="btn btn-outline-primary shadow-none" asp-action="Index" asp-route-selectedId="@item.Id"> Show </a>
-                @if (ViewBag.SelectedId == item.Id)
-                {
-                    <p>@item.Description</p>
-                }
+                <p>@item.Description</p>
             }
+
         </div>
     }
 </div>

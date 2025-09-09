@@ -13,7 +13,6 @@ namespace RestaurantMVC.Controllers
         private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
         public async Task<IActionResult> Index(int? selectedId = null)
         {
-            ViewBag.ShowDescriptionBtn = true;
             var menuItems = await menu.Menu();
             ViewBag.SelectedId = selectedId;
             return View(menuItems); 
@@ -79,13 +78,8 @@ namespace RestaurantMVC.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit()
-        {
-            
-            return View();
-        }
-
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, MenuItemVM model)
         {
             if (!ModelState.IsValid)
