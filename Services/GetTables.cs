@@ -1,19 +1,18 @@
-﻿using Microsoft.Extensions.Logging;
-using RestaurantMVC.Models;
-using RestaurantMVC.Services.Iservices;
+﻿using RestaurantMVC.Models;
+using System.Net.Http;
 
 namespace RestaurantMVC.Services
 {
-    public class GetMenu(IHttpClientFactory httpClientFactory, ILogger<GetMenu> _logger) : IGetMenu
+    public class GetTables(IHttpClientFactory httpClientFactory, ILogger<GetMenu> _logger)
     {
         private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
-        public async Task<List<MenuItem>> Menu()
+        public async Task<List<RestaurantTable>> GetAllTables()
         {
             try
             {
-                var response = await _httpClient.GetAsync("GetAllTables/GetWholeMenu");
+                var response = await _httpClient.GetAsync("/Table/GetAllTables");
 
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<MenuItem>>>();
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<RestaurantTable>>>();
                 if (apiResponse == null || apiResponse.Data == null)
                 {
                     return [];
@@ -24,22 +23,21 @@ namespace RestaurantMVC.Services
             catch (HttpRequestException ex)
             {
                 _logger.LogWarning(ex, "API not available: {Message}", ex.Message);
-                return GetFallbackMenu();
+                return FoundNoTables();
             }
 
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred: {Message}", ex.Message);
-                return GetFallbackMenu();
+                return FoundNoTables();
             }
 
         }
-        private static List<MenuItem> GetFallbackMenu()
+        private static List<RestaurantTable> FoundNoTables()
         {
             return [
                 new() {
-                    Title = "Not found",
-                    Description = "Not found"
+                   
                 }
             ];
         }
