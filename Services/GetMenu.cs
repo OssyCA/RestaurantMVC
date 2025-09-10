@@ -11,7 +11,7 @@ namespace RestaurantMVC.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync("GetAllTables/GetWholeMenu");
+                var response = await _httpClient.GetAsync("Menu/GetWholeMenu");
 
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<MenuItem>>>();
                 if (apiResponse == null || apiResponse.Data == null)
