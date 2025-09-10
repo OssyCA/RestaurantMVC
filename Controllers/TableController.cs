@@ -1,13 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantMVC.Services;
+using RestaurantMVC.ViewModels;
 
 namespace RestaurantMVC.Controllers
 {
     public class TableController(GetTables getTables) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View(getTables.GetAllTables());
+            var mangeTable = new ManageTableVM
+            {
+                NewTable = new Models.RestaurantTable(),
+                Tables = await getTables.GetAllTables()
+
+            };
+            return View(mangeTable);
         }
     }
 }

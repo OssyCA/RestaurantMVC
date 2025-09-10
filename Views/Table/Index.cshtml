@@ -3,13 +3,18 @@
 
 
 <div>
-
-    <h2>Hanter bord</h2>
-
+    <h2>Hantera bord</h2>
     <div>
         @foreach (var item in Model.Tables)
         {
-            
+            <h4>Bord nummer: @item.TableNumber</h4>
+            <span>Kapacitet: @item.Capacity personer</span>
+            <p>Status: @(item.BookingLocked ? "Låst" : "Tillgängligt")</p>
+            <a class="btn btn-primary">EDIT</a>
+            <form>
+                <button>Delete</button>
+            </form>
+            <hr />
         }
     </div>
 </div>

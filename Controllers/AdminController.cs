@@ -12,7 +12,7 @@ namespace RestaurantMVC.Controllers
         }
         public IActionResult HandleTable()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Table");
         }
         public IActionResult HandleBooknings()
         {
