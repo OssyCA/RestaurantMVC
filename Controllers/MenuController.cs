@@ -92,7 +92,7 @@ namespace RestaurantMVC.Controllers
                 Title = model.Title,
                 Description = model.Description,
                 IsPopular = model.IsPopular,
-                ImageUrl = model.ImageUrl,
+                ImageUrl = model.ImageUrl ?? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAADFCAMAAACM/tznAAAAbFBMVEUAAAD////Pz8/Hx8empqasrKx6enrExMT39/dubm4LCwsQEBC3t7ewsLCgoKCXl5eIiIguLi7u7u6Li4uCgoLf39/W1tYVFRW0tLRnZ2ciIiJ0dHRgYGCamprZ2dnn5+dNTU1ISEg7OztYWFg9GncPAAAB8klEQVR4nO3Z23KCMBSF4WzUQmsQq3io2oP6/u/YBAPEKcWLTiNj/u/GJALbLMZiE6UAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADi9eILXXEapmKvVLKa6CAVF1lbcRakYq+RtEZBKnoFZRykYi8TwLacV5ZvQSq6avMyGUoA+zuVngwlgKc7lSaAwQbwkmo9qTu7VOeuWWrdfF1M+7k5IdVp17V/Ga4NN4Cp/QN9cJ1Xkcw1t94n1iLvzQnm8K5r/zJcG3gAK9fxAsilfXCbAIrmhAcMIBNxD8VIA9Af8nnpRBpA8lX/Pog0gJVayaLqRBrAQp3dG5EGYOa8vkw80gDMJz+KlCrmAFRSzTziAE4iy6gDsO/FHcCrneQm4gBUal9jDmBn/+WLOQA7zesA6qUB84iIIgDTKtoACnE/j1U1uYPyOl3XfoAA1FayrAnAzsjd9vRqcg8cQLWK3wRQ2IWScTHLM2nWC9xBaWtU9g/XBhNAqTYXUzfmB5D7AahZu6fhL6bLtbx32BXb2EsPI4AfO0PTdZI0B5i2t2N00vbmy2J8tav3kfjWy97hge0MJR0B3GBu3l/4AUxuH/7fzs+tc5CKXsH9MUhFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALizb0qhFsAfTxmyAAAAAElFTkSuQmCC",
                 Price = model.Price
             };
 
