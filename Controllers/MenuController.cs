@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RestaurantMVC.DTOs;
 using RestaurantMVC.Models;
 using RestaurantMVC.Services.Iservices;
@@ -32,14 +33,15 @@ namespace RestaurantMVC.Controllers
         [Authorize]
         public async Task<IActionResult> CreateMenuItem(MenuItemVM model)
         {
+
+            var menuItems = await menu.Menu();
+            var manageModel = new ManageMenuVM
+            {
+                MenuItems = menuItems,
+                NewMenuItem = model
+            };
             if (!ModelState.IsValid)
             {
-                var menuItems = await menu.Menu();
-                var manageModel = new ManageMenuVM
-                {
-                    MenuItems = menuItems,
-                    NewMenuItem = model 
-                };
 
                 var errors = ModelState
                     .Where(x => x.Value.Errors.Count > 0)
@@ -68,12 +70,6 @@ namespace RestaurantMVC.Controllers
             else
             {
                 ModelState.AddModelError("", "Ett fel uppstod när meny-objektet skulle sparas.");
-                var menuItems = await menu.Menu();
-                var manageModel = new ManageMenuVM
-                {
-                    MenuItems = menuItems,
-                    NewMenuItem = model
-                };
                 return View("ManageMenuItems", manageModel);
             }
         }
@@ -81,7 +77,7 @@ namespace RestaurantMVC.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, MenuItemVM model, bool showForm)
+        public async Task<IActionResult> Edit(int id, MenuItemVM model)
         {
             ViewBag.SelectedId = id;
 
@@ -119,7 +115,6 @@ namespace RestaurantMVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                // Du kan lägga till TempData för felmeddelanden här
                 TempData["ErrorMessage"] = "Ett fel uppstod när meny-objektet skulle tas bort.";
             }
             else

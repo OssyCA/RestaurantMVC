@@ -1,0 +1,18 @@
+﻿@model RestaurantMVC.ViewModels.TableVM
+<form asp-action="@ViewData["FormAction"]" asp-route-id="@Model.Id" method="post" asp-controller="Table">
+    @if (Model.Id > 0)
+    {
+        <input asp-for="Id" type="hidden" />
+    }
+    <div>
+        <label asp-for="TableNumber"></label>
+        <input asp-for="TableNumber" type="number"/>
+    </div>
+    <div>
+        <label asp-for="Capacity"></label>
+        <input asp-for="Capacity" />
+    </div>
+    <button type="submit">
+        Spara
+    </button>
+</form>
