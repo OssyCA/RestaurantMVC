@@ -1,18 +1,26 @@
 ﻿@model RestaurantMVC.ViewModels.TableVM
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <form asp-action="@ViewData["FormAction"]" asp-route-id="@Model.Id" method="post" asp-controller="Table">
     @if (Model.Id > 0)
     {
         <input asp-for="Id" type="hidden" />
     }
-    <div>
-        <label asp-for="TableNumber"></label>
-        <input asp-for="TableNumber" type="number"/>
+    <div class="mb-3">
+        <label asp-for="TableNumber" class="form-label text-light">Table Number</label>
+        <input asp-for="TableNumber" type="number" class="form-control" />
+        <span asp-validation-for="TableNumber" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Capacity"></label>
-        <input asp-for="Capacity" />
+    <div class="mb-3">
+        <label asp-for="Capacity" class="form-label text-light">Capacity</label>
+        <input asp-for="Capacity" type="number" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
     </div>
-    <button type="submit">
+    <button type="submit" class="btn btn-success">
         Spara
     </button>
 </form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

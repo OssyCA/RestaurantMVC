@@ -1,17 +1,23 @@
 ﻿@using RestaurantMVC.ViewModels
 @model RestaurantMVC.ViewModels.ManageMenuVM
 
-<div class="card bg-dark border-secondary mb-4 shadow-lg">
-    <div class="card-header bg-gradient text-light border-secondary">
-        <h4 class="mb-0">
-            <i class="fas fa-plus-circle me-2 text-success"></i>Create Menu item
-        </h4>
-    </div>
-    <div class="card-body bg-dark">
-        @{
-            ViewData["FormAction"] = "CreateMenuItem";
-        }
-        <partial name="_MenuItemForm" model="Model.NewMenuItem" />
+<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#createItem" aria-expanded="false" aria-controls="createItem">
+    Create menu item
+</button>
+
+<div class="collapse" id="createItem">
+    <div class="card bg-dark border-secondary mb-4 shadow-lg">
+        <div class="card-header bg-gradient text-light border-secondary">
+            <h4 class="mb-0">
+                <i class="fas fa-plus-circle me-2 text-success"></i>Create Menu item
+            </h4>
+        </div>
+        <div class="card-body bg-dark">
+            @{
+                ViewData["FormAction"] = "CreateMenuItem";
+            }
+            <partial name="_MenuItemForm" model="Model.NewMenuItem" />
+        </div>
     </div>
 </div>
 
@@ -21,29 +27,35 @@
         <div class="mb-4">
             <h4>@item.Title</h4>
             <img src="@item.ImageUrl" class="img-fluid w-25" alt="@item.Title" style="width: 2.5em; height: 15em; object-fit: cover; border-radius: 8px;" />
-            <p>PRICE: @item.Price</p>
 
-            <div class="card bg-dark border-secondary mb-4 shadow-lg">
-                <div class="card-header bg-gradient text-light border-secondary">
-                    <h4 class="mb-0">
-                        <i class="fas fa-edit me-2 text-warning"></i>Edit: @item.Title
-                    </h4>
+            <button class="btn btn-warning mb-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#editForm-@item.Id" aria-expanded="false" aria-controls="editForm-@item.Id">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+
+            <div class="collapse" id="editForm-@item.Id">
+                <div class="card bg-dark border-secondary mb-4 shadow-lg">
+                    <div class="card-header bg-gradient text-light border-secondary">
+                        <h4 class="mb-0">
+                            <i class="fas fa-edit me-2 text-warning"></i>Edit: @item.Title
+                        </h4>
+                    </div>
+                    <div class="card-body bg-dark">
+                        @{
+                            ViewData["FormAction"] = "Edit";
+                            var editModel = new MenuItemVM
+                            {
+                                Id = item.Id,
+                                Title = item.Title,
+                                Description = item.Description,
+                                IsPopular = item.IsPopular,
+                                ImageUrl = item.ImageUrl,
+                                Price = item.Price
+                            };
+                        }
+                        <partial name="_MenuItemForm" model="editModel" />
+                    </div>
                 </div>
-                <div class="card-body bg-dark">
-                    @{
-                        ViewData["FormAction"] = "Edit";
-                        var editModel = new MenuItemVM
-                        {
-                            Id = item.Id,
-                            Title = item.Title,
-                            Description = item.Description,
-                            IsPopular = item.IsPopular,
-                            ImageUrl = item.ImageUrl,
-                            Price = item.Price
-                        };
-                    }
-                    <partial name="_MenuItemForm" model="editModel" />
-                </div>          
             </div>
 
             <form asp-action="DeleteItem" asp-controller="Menu" asp-route-id="@item.Id" method="post"

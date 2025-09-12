@@ -5,47 +5,58 @@
 
 <div>
     <h2>Handle Tables</h2>
-    <div class="card bg-dark border-secondary mb-4 shadow-lg">
-        <div class="card-header bg-primary text-light border-secondary">
-            <h4 class="mb-0">
-                <i class="fas fa-plus-circle me-2 text-success"></i>Create table
-            </h4>
-        </div>
-        <div class="card-body bg-dark">
-            @{
-                ViewData["FormAction"] = "CreateTable";
-            }
-            <partial name="_TableForm" model="Model.NewTable" />
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#createItem" aria-expanded="false" aria-controls="createItem">
+        Create Table    
+    </button>
+    <div id="createItem" class="collapse">
+        <div class="card bg-dark border-secondary mb-4 shadow-lg">
+            <div class="card-header bg-primary text-light border-secondary">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus-circle me-2 text-success"></i>Create table
+                </h4>
+            </div>
+            <div class="card-body bg-dark">
+                @{
+                    ViewData["FormAction"] = "CreateTable";
+                }
+                <partial name="_TableForm" model="Model.NewTable" />
+            </div>
         </div>
     </div>
     <div>
         @foreach (var item in Model.Tables)
         {
+            <h3>Table: @item.TableNumber</h3>
+            <p>Capcity: @item.Capacity</p>
+            <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#editForm-@item.Id" aria-expanded="false" aria-controls="editForm-@item.Id">
+               Edit Table
+            </button>
+            <div class="collapse" id="editForm-@item.Id">
+                <div class="card bg-dark border-secondary mb-4 shadow-lg">
+                    <div class="card-header bg-gradient text-light border-secondary">
+                        <h4 class="mb-0">
+                            <i class="fas fa-edit me-2 text-warning"></i>Edit table: @item.TableNumber
+                        </h4>
+                    </div>
+                    <div class="card-body bg-dark">
+                        @{
+                            ViewData["FormAction"] = "Edit";
+                            var editModel = new TableVM
+                            {
+                                Id = item.Id,
+                                Capacity = item.Capacity,
+                                TableNumber = item.TableNumber
 
-            <div class="card bg-dark border-secondary mb-4 shadow-lg">
-                <div class="card-header bg-gradient text-light border-secondary">
-                    <h4 class="mb-0">
-                        <i class="fas fa-edit me-2 text-warning"></i>Edit table: @item.TableNumber
-                    </h4>
+                            };
+                        }
+                        <partial name="_TableForm" model="editModel" />
+                    </div>
+                   
                 </div>
-                <div class="card-body bg-dark">
-                    @{
-                        ViewData["FormAction"] = "Edit";
-                        var editModel = new TableVM
-                        {
-                            Id = item.Id,
-                            Capacity = item.Capacity,
-                            TableNumber = item.TableNumber
-
-                        };
-                    }
-                    <partial name="_TableForm" model="editModel" />
-                </div>
-                <form asp-controller="Table" asp-action="DeleteTable" method="post" asp-route-id="@item.Id">
-                    <button type="submit">Delete</button>
-                </form>
             </div>
-           
+            <form asp-controller="Table" asp-action="DeleteTable" method="post" asp-route-id="@item.Id">
+                <button type="submit">Delete</button>
+            </form>
             <hr />
         }
     </div>
