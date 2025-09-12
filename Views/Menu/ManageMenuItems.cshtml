@@ -4,7 +4,7 @@
 <div class="card bg-dark border-secondary mb-4 shadow-lg">
     <div class="card-header bg-gradient text-light border-secondary">
         <h4 class="mb-0">
-            <i class="fas fa-plus-circle me-2 text-success"></i>Skapa nytt Meny innehåll
+            <i class="fas fa-plus-circle me-2 text-success"></i>Create Menu item
         </h4>
     </div>
     <div class="card-body bg-dark">
@@ -26,7 +26,7 @@
             <div class="card bg-dark border-secondary mb-4 shadow-lg">
                 <div class="card-header bg-gradient text-light border-secondary">
                     <h4 class="mb-0">
-                        <i class="fas fa-edit me-2 text-warning"></i>Redigera Menyobjekt: @item.Title
+                        <i class="fas fa-edit me-2 text-warning"></i>Edit: @item.Title
                     </h4>
                 </div>
                 <div class="card-body bg-dark">
@@ -43,14 +43,14 @@
                         };
                     }
                     <partial name="_MenuItemForm" model="editModel" />
-                </div>
+                </div>          
             </div>
 
             <form asp-action="DeleteItem" asp-controller="Menu" asp-route-id="@item.Id" method="post"
                   onsubmit="return confirm('Är du säker på att du vill ta bort @item.Title?')"
                   class="d-inline w-100">
                 <button type="submit" class="btn btn-danger mb-2 w-100">
-                    <i class="fas fa-trash"></i> Ta bort
+                    <i class="fas fa-trash"></i> Delete
                 </button>
             </form>
         </div>

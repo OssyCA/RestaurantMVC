@@ -5,9 +5,9 @@ namespace RestaurantMVC.ViewModels
     public class MenuItemVM
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Need title")]
         public string Title { get; set; } = null!;
-        [Required]
+        [Required(ErrorMessage ="Need a description")]
         public string Description { get; set; } = null!;
         public bool IsPopular { get; set; }
         [Url(ErrorMessage = "Please enter a valid URL")]
