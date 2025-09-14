@@ -1,5 +1,6 @@
 html {
     font-size: 0.875rem; 
+    height: 100%; /* Lägg till detta */
 }
 
 @media (min-width: 48em) { 
@@ -16,14 +17,19 @@ html {
     box-shadow: 0 0 0 0.1em white, 0 0 0 0.25em #258cfb;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
+/* Uppdatera body för sticky footer */
+body {
+    min-height: 100vh; /* Använd viewport height istället */
+    display: flex;
+    flex-direction: column;
+    margin: 0; /* Ta bort margin-bottom */
 }
 
-body {
-    margin-bottom: 3.75rem;
+/* Lägg till denna klass för main content */
+.main-content {
+    flex: 1; /* Detta gör att main content tar upp tillgängligt utrymme */
 }
+
 .bg-custom-dark {
     background-color: #1a1d23; 
     color: #f8f9fa; 
@@ -33,6 +39,7 @@ body {
     background-color: #14161a;
     color: #bbb;
 }
+
 .navbar-dark .nav-link.active {
     color: #ffc107 !important; 
     font-weight: bold;

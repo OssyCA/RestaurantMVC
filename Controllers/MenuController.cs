@@ -103,6 +103,8 @@ namespace RestaurantMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                menu.ClearMenuCache();
+
                 TempData["SuccessMessage"] = "Menyobjektet har uppdaterats!";
                 return RedirectToAction("ManageMenuItems");
             }
@@ -122,6 +124,7 @@ namespace RestaurantMVC.Controllers
             }
             else
             {
+                menu.ClearMenuCache();
                 TempData["SuccessMessage"] = "Meny-objektet har tagits bort.";
             }
 
