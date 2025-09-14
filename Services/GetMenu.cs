@@ -26,7 +26,7 @@ namespace RestaurantMVC.Services
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<MenuItem>>>();
                 if (apiResponse == null || apiResponse.Data == null)
                 {
-                    return [];
+                    return GetFallbackMenu();
                 }
 
 
