@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using RestaurantMVC.Helper
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <meta name="description" content="Boka bord och upptäck vår meny med god mat. Restaurangen i Stockholm med klassiska rätter och moderna smaker.">
     <title>@ViewData["Title"] - Restaurant SYB</title>
+    <meta name="description" content="Restaurant SYB i Stockholm erbjuder klassiska rätter och moderna smaker. Boka bord online eller upptäck vår meny. Öppet alla dagar 10–22.">
+    <meta name="keywords" content="restaurang, boka bord, meny, mat, Stockholm, SYB">
+    <meta name="author" content="Restaurant SYB">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RestaurantMVC.styles.css" asp-append-version="true" />
@@ -24,17 +27,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link @Html.IsActive("Home")" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Menu" asp-action="Index">Meny</a>
+                            <a class="nav-link @Html.IsActive("Menu")" asp-controller="Menu" asp-action="Index">Meny</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Booking" asp-action="Index">Boking</a>
+                            <a class="nav-link @Html.IsActive("Booking")" asp-controller="Booking" asp-action="Index">Bokning</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                            <a class="nav-link @Html.IsActive("Admin")" asp-controller="Admin" asp-action="Index">Admin</a>
                         </li>
+
                     </ul>
                 </div>
                 @{

@@ -33,3 +33,8 @@ body {
     background-color: #14161a;
     color: #bbb;
 }
+.navbar-dark .nav-link.active {
+    color: #ffc107 !important; 
+    font-weight: bold;
+    border-bottom: 2px solid #ffc107;
+}
