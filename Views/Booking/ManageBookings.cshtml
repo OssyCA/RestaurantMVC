@@ -1,0 +1,87 @@
+﻿@model RestaurantMVC.ViewModels.ManageBookingsVM
+
+<div class="container">
+    <h2 class="text-center mb-4">Manage Bookings</h2>
+
+    @if (!Model.Bookings.Any())
+    {
+        <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle me-2"></i>
+            No bookings found.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Table</th>
+                        <th>Date & Time</th>
+                        <th>Guests</th>
+                        <th>Expires</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model.Bookings.OrderBy(b => b.StartAt))
+                    {
+                        <tr class="@(booking.StartAt < DateTime.Now ? "table-warning" : "")">
+                            <td>
+                                <strong>@booking.CustomerName</strong>
+                            </td>
+                            <td>
+                                <small>
+                                    <i class="fas fa-envelope me-1"></i>@booking.CustomerEmail<br>
+                                    <i class="fas fa-phone me-1"></i>@booking.CustomerPhone
+                                </small>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">Table @booking.TableNumber</span>
+                            </td>
+                            <td>
+                                <div>
+                                    <i class="fas fa-calendar me-1"></i>
+                                    @booking.StartAt.ToString("yyyy-MM-dd")
+                                </div>
+                                <div>
+                                    <i class="fas fa-clock me-1"></i>
+                                    @booking.StartAt.ToString("HH:mm")
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-info">@booking.Amount guests</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    @booking.FormattedExpireTime
+                                </small>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column gap-1">
+                                    <a asp-action="EditBooking"
+                                       asp-route-id="@booking.BookingId"
+                                       class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+
+                                    <form asp-action="DeleteBooking"
+                                          asp-route-id="@booking.BookingId"
+                                          method="post"
+                                          onsubmit="return confirm('Are you sure you want to delete the booking for @booking.CustomerName?')"
+                                          style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger w-100">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -16,7 +16,7 @@ namespace RestaurantMVC.Controllers
         }
         public IActionResult HandleBooknings()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ManageBookings", "Booking");
         }
         public IActionResult HandleMenu()
         {
