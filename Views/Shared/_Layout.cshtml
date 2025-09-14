@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta name="description" content="Boka bord och upptäck vår meny med god mat. Restaurangen i Stockholm med klassiska rätter och moderna smaker.">
     <title>@ViewData["Title"] - Restaurant SYB</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -63,11 +64,45 @@
         </main>
     </div>
 
-    <footer class="border-top border-danger footer text-muted">
+    <footer class="bg-dark text-light py-4 mt-5 ">
         <div class="container">
-            &copy; 2025 - RestaurantMVC - Öppet 10-22
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-uppercase">Restaurant SYB</h5>
+                    <p>
+                        Din restaurang i Stockholm. Klassiska rätter och moderna smaker.
+                        Boka bord enkelt online eller ring oss direkt.
+                    </p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-uppercase">Öppettider</h5>
+                    <ul class="list-unstyled">
+                        <li>Måndag–söndag: 10:00 – 22:00</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-uppercase">Kontakt</h5>
+                    <p>
+                        <i class="fas fa-map-marker-alt me-2"></i> Storgatan 10, Stockholm<br>
+                        <i class="fas fa-phone me-2"></i> 08-123 456 78<br>
+                        <i class="fas fa-envelope me-2"></i> info@restaurantsyb.se
+                    </p>
+                    <div>
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-twitter fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-secondary">
+            <div class="text-center">
+                <small>&copy; 2025 - Restaurant SYB | Alla rättigheter förbehållna</small>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

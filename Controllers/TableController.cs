@@ -2,12 +2,13 @@
 using RestaurantMVC.DTOs;
 using RestaurantMVC.Models;
 using RestaurantMVC.Services;
+using RestaurantMVC.Services.Iservices;
 using RestaurantMVC.ViewModels;
 using System.Reflection;
 
 namespace RestaurantMVC.Controllers
 {
-    public class TableController(GetTables getTables, IHttpClientFactory httpClientFactory) : Controller
+    public class TableController(IGetTables getTables, IHttpClientFactory httpClientFactory) : Controller
     {
         private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
         public async Task<IActionResult> Index()

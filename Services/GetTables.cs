@@ -1,11 +1,13 @@
 ﻿using RestaurantMVC.Models;
+using RestaurantMVC.Services.Iservices;
 using System.Net.Http;
 
 namespace RestaurantMVC.Services
 {
-    public class GetTables(IHttpClientFactory httpClientFactory, ILogger<GetMenu> _logger)
+    public class GetTables(IHttpClientFactory httpClientFactory, ILogger<GetMenu> _logger): IGetTables
     {
         private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
+
         public async Task<List<RestaurantTable>> GetAllTables()
         {
             try

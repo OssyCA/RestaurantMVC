@@ -10,14 +10,17 @@ namespace RestaurantMVC.Controllers
         {
             return View();
         }
+        [Authorize]
         public IActionResult HandleTable()
         {
             return RedirectToAction("Index", "Table");
         }
+        [Authorize]
         public IActionResult HandleBooknings()
         {
             return RedirectToAction("ManageBookings", "Booking");
         }
+        [Authorize]
         public IActionResult HandleMenu()
         {
             return RedirectToAction("ManageMenuItems", "Menu");

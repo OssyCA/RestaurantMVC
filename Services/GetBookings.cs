@@ -1,11 +1,12 @@
 ﻿// Services/GetBookings.cs
 using RestaurantMVC.DTOs;
 using RestaurantMVC.Models;
+using RestaurantMVC.Services.Iservices;
 using RestaurantMVC.ViewModels;
 
 namespace RestaurantMVC.Services
 {
-    public class GetBookings(IHttpClientFactory httpClientFactory, ILogger<GetBookings> logger)
+    public class GetBookings(IHttpClientFactory httpClientFactory, ILogger<GetBookings> logger) : IGetBookings
     {
         private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
 

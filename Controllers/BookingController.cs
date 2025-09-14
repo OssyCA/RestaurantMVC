@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantMVC.DTOs;
 using RestaurantMVC.Services;
+using RestaurantMVC.Services.Iservices;
 using RestaurantMVC.ViewModels;
 
 namespace RestaurantMVC.Controllers
 {
     public class BookingController(
         IHttpClientFactory httpClientFactory,
-        GetBookings getBookings,
-        GetTables getTables) : Controller
+        IGetBookings getBookings,
+        IGetTables getTables) : Controller
     {
         private readonly HttpClient _httpClient = httpClientFactory.CreateClient("RestaurantAPI");
         public IActionResult Index()
@@ -47,8 +48,6 @@ namespace RestaurantMVC.Controllers
 
             return View(booking);
         }
-        [HttpPost]
-        [Authorize]
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> EditBooking(int id, UpdateBookingVM model)

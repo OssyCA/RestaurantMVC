@@ -39,8 +39,8 @@ namespace RestaurantMVC
 
             builder.Services.AddAuthorization();
             builder.Services.AddScoped<IGetMenu, GetMenu>();
-            builder.Services.AddScoped<GetTables>(); // FIXA INterface
-            builder.Services.AddScoped<GetBookings>(); // FIXA INterface
+            builder.Services.AddScoped<IGetTables,GetTables>(); 
+            builder.Services.AddScoped<IGetBookings,GetBookings>(); 
 
             var app = builder.Build();
 
