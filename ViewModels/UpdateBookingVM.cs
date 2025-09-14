@@ -25,11 +25,12 @@ namespace RestaurantMVC.ViewModels
         public int Amount { get; set; }
 
         [Display(Name = "Customer Email")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
         public string CustomerEmail { get; set; } = string.Empty;
 
         [Display(Name = "Customer Phone")]
+        [Phone(ErrorMessage = "Invalid phone format")]
         public string CustomerPhone { get; set; } = string.Empty;
-        public DateTime BookedAt { get; set; }
         public List<RestaurantTable> AvailableTables { get; set; } = [];
     }
 }

@@ -49,10 +49,19 @@ namespace RestaurantMVC.Controllers
         }
         [HttpPost]
         [Authorize]
+        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EditBooking(int id, UpdateBookingVM model)
         {
+            // Debug ModelState
             if (!ModelState.IsValid)
             {
+                var errors = string.Join("; ", ModelState
+                    .SelectMany(x => x.Value.Errors)
+                    .Select(x => x.ErrorMessage));
+
+                Console.WriteLine($"ModelState Errors: {errors}");
+
                 model.AvailableTables = await getTables.GetAllTables();
                 return View(model);
             }
@@ -62,8 +71,13 @@ namespace RestaurantMVC.Controllers
                 TableId = model.TableId,
                 StartAt = model.StartAt,
                 CustomerName = model.CustomerName,
+                CustomerEmail = model.CustomerEmail, 
+                CustomerPhone = model.CustomerPhone, 
                 Amount = model.Amount
             };
+
+
+            Console.WriteLine($"Sending DTO: TableId={updateDto.TableId}, StartAt={updateDto.StartAt}, CustomerName={updateDto.CustomerName}");
 
             var response = await _httpClient.PutAsJsonAsync($"Booking/Updatebooking/{id}", updateDto);
 
@@ -72,6 +86,10 @@ namespace RestaurantMVC.Controllers
                 TempData["SuccessMessage"] = "Booking updated successfully!";
                 return RedirectToAction("ManageBookings");
             }
+
+            // Debug API response
+            var errorContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"API Error Response: {errorContent}");
 
             TempData["ErrorMessage"] = "Failed to update booking.";
             model.AvailableTables = await getTables.GetAllTables();

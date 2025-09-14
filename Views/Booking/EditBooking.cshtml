@@ -33,7 +33,7 @@
                     <select asp-for="TableId" class="form-select">
                         @foreach (var table in Model.AvailableTables)
                         {
-                            <option value="@table.Id">Table @table.TableNumber</option>
+                            <option value="@table.Id">Table @table.TableNumber Capacity: @table.Capacity</option>
                         }
                     </select>
                     <span asp-validation-for="TableId" class="text-danger"></span>
@@ -41,7 +41,11 @@
 
                 <div class="mb-3">
                     <label asp-for="StartAt" class="form-label text-light">Start Time</label>
-                    <input asp-for="StartAt" type="datetime-local" class="form-control" />
+
+                    <input asp-for="StartAt"
+                           type="datetime-local"
+                           class="form-control"
+                           value="@Model.StartAt.ToString("yyyy-MM-ddTHH:mm")" />
                     <span asp-validation-for="StartAt" class="text-danger"></span>
                 </div>
 
