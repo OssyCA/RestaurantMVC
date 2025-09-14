@@ -1,17 +1,57 @@
-﻿
+﻿<div class="container mt-5">
+    <h2 class="text-center text-light mb-4">Handle Restaurang</h2>
 
-<div>
-    <h2>Handle Restuarant</h2>
-    <div>
-        <h3>Bord inställningar</h3>
-        <a asp-controller="Admin" asp-action="HandleTable">Bord</a>
-    </div>
-    <div>
-        <h3>Meny inställningar</h3>
-        <a asp-controller="Admin" asp-action="HandleMenu">Meny</a>
-    </div>
-    <div>
-        <h3>Bokningar inställningar</h3>
-        <a asp-controller="Admin" asp-action="HandleBooknings">Booknigar </a>
+    <div class="row g-4">
+        <div class="col-md-4 handler">
+            <div class="card bg-dark text-light shadow-lg border-0">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Handle tables</h3>
+                    <a asp-controller="Admin" asp-action="HandleTable" class="btn btn-outline-light mt-3 w-100">
+                        Handle Bord
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 handler">
+            <div class="card bg-dark text-light shadow-lg border-0">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Handle Menu</h3>
+                    <a asp-controller="Admin" asp-action="HandleMenu" class="btn btn-outline-light mt-3 w-100">
+                        Handle Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 handler">
+            <div class="card bg-dark text-light shadow-lg border-0">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Handle bookings</h3>
+                    <a asp-controller="Admin" asp-action="HandleBooknings" class="btn btn-outline-light mt-3 w-100">
+                        Handle Bokningar
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+    .handler {
+        background-color: #333;
+        color: #fff;
+        padding: 0.8em 1.6em;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .handler:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+</style>
+
